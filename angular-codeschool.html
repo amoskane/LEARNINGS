@@ -1,0 +1,125 @@
+(function(){        							//closure setup
+	var app = angular.module('store', []);
+
+	app.controller('StoreController', function(){  	//we're passing in an anonymous function 
+													//that will run when our controller is called
+
+		this.product = gem;
+													//we need to set the gem to a propertiy of the controller
+	});
+
+
+	var gem = {
+		name:'Dodo',
+		price:2.95,
+		description: '....',  //we want to display this gem on our page
+		canPurchase: false
+	}
+
+
+})();												//closure setup
+
+To display on page, 
+	  <directive>   <controller> <keyword> <alias>
+<div ng-controller="StoreController as store">
+	<h1>{{store.product.name}}</h1>
+	<h2>${{store.product.price}}</h2>
+	<p>{{store.product.description}}</p>
+	<button ng-show="store.product.canPurchase">Add to Cart</button>
+</div>	
+
+More than 1 product!
+var gems = [
+	{
+		name:'Dodo',
+		price:2.95,
+		description: '....',
+		canPurchase: true,
+	}
+	{
+		name:'Pentagonal',
+		price:5.95,
+		description: '....',
+		canPurchase: false,
+	}
+];
+
+
+Filters
+RECIPE:  {{ data | filter:options }}
+date: 'MM/dd/yyyy' @ h:mma    ==    12/27/2013 @ 12:50AM
+uppercase   lowercase
+limitTo:8
+orderBy: '-price'  === descending price
+
+{{ product.images[0].full }} would display thre full image
+
+
+<li ng-repeat="image in product.images" class="small-image pull-left thumbnail" >
+    <img ng-src="{{image}}" />
+
+
+ng-show if length doesn't return 0.
+
+
+-------------
+Assign a value to a tab:
+
+<section>
+	<ul class="nav nav-pills">         /////bootstrap
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 1">Description</a></li> ///set a class when the tab is active
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 2">Specs</a></li>
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 3">Reviews</a></li>
+	</ul>
+	{{tab}}
+</section>
+
+
+<div class="panel" ng-show="tab === 1">
+	<h4>Description</h4>
+	<p>{{product.description}}</p>
+</div>
+...
+
+to set an initial value:
+<section ng-init="tab = 1"></section>
+
+
+ng-class="{ class: expression }"
+
+-------------
+Now pull all this logic back OUT of the HTML!
+Put it in a new controller.
+
+<section ng-init="tab = 1" ng-controller="PanelController as panel"></section>
+	<ul class="nav nav-pills">    
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 1">Description</a></li> 
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 2">Specs</a></li>
+		<li ng-class="{ active:tab === 1 }"><a href="" ng-click="tab = 3">Reviews</a></li>
+	</ul>
+	<div class="panel" ng-show="tab === 1">
+		<h4>Description</h4>
+		<p>{{product.description}}</p>
+	</div>
+	...
+</section>
+
+initialization and configuration should happen inside a controller
+app.controller("PanelController", function(){
+	this.tab = 1;    //can now refer to this as panel.tab beacsue of our alias
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
